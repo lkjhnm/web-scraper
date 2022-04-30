@@ -14,7 +14,8 @@ class DataScraperTestCase(unittest.TestCase):
 		self.assertIsNotNone(html_text)
 
 	def test_parse(self):
-		test_file = open(f'{path_util.ROOT_DIR.joinpath("tmp").joinpath("test.html")}', 'r', encoding='UTF-8')
+		test_resources = path_util.ROOT_DIR.joinpath("tests").joinpath("resources").joinpath("test.html")
+		test_file = open(f'{test_resources}', 'r', encoding='UTF-8')
 		data = ''
 		for line in test_file.readlines():
 			data += line
