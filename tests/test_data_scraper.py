@@ -14,27 +14,14 @@ class DataScraperTestCase(unittest.TestCase):
 		self.assertIsNotNone(html_text)
 
 	def test_parse(self):
-		html_text = data_scraper.download(DataScraperTestCase.target_url)
-		parser = BeautifulSoup(markup=html_text, features='html.parser')
-		products = parser.select('.basicList_item__2XT81')
+		test_file = open(f'{path_util.ROOT_DIR.joinpath("tmp").joinpath("test.html")}', 'r', encoding='UTF-8')
+		data = ''
+		for line in test_file.readlines():
+			data += line
+		test_file.close()
 
-		product_data = ''
-		for idx, product in enumerate(products):
-			name = product.select('.basicList_title__3P9Q7')[0].get_text()
-			price = product.select('.price_num__2WUXn')[0].get_text()
-			product_data += f'{name},{price}\n'
-
-		self.assertNotEqual(product_data, '')
-
-	# tmp_dir = path_util.ROOT_DIR.joinpath("tmp")
-	# if not tmp_dir.exists():
-	# 	tmp_dir.mkdir()
-	#
-	# file = open(f'{tmp_dir.joinpath("device_price.txt")}', 'w', encoding='UTF-8')
-	# file.write(product_data)
-	# file.close()
-	#
-	# print(product_data)
+		product_infos = data_scraper.parse(data)
+		self.assertIsNotNone(product_infos)
 
 
 if __name__ == '__main__':
