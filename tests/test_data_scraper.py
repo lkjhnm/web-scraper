@@ -1,8 +1,6 @@
 import unittest
 
-from bs4 import BeautifulSoup
-
-from scraper import data_scraper
+from scraper.data_scraper import DataScrapper
 from utils import path_util
 
 
@@ -18,11 +16,18 @@ class DataScraperTestCase(unittest.TestCase):
 		test_file.close()
 
 	def test_download(self):
+		data_scraper = DataScrapper()
 		html_text = data_scraper.download(DataScraperTestCase.target_url)
 		self.assertIsNotNone(html_text)
 
 	def test_parse(self):
-		product_infos = data_scraper.parse(self.__test_html__)
+		data_scraper = DataScrapper()
+		product_infos = data_scraper.parse(data=self.__test_html__, parser='naver-shopping')
+		self.assertIsNotNone(product_infos)
+
+	def test_scrap(self):
+		data_scraper = DataScrapper()
+		product_infos = data_scraper.scrap()
 		self.assertIsNotNone(product_infos)
 
 
