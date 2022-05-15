@@ -17,5 +17,5 @@ class KafkaHandler:
 	def produce(self, product_infos):
 		# todo: topic 별도로 추출
 		for product_info in product_infos:
-			self._producer.send(topic='test', value=product_info)
+			self._producer.send(topic='test', value=bytes(product_info, 'utf-8'))
 		self._producer.flush()
